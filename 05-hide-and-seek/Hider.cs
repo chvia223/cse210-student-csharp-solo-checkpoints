@@ -12,6 +12,9 @@ namespace _05_hide_and_seek
     public class Hider
     {
         // TODO: Add any member variables here
+        public int _location;
+        public List<int> _distance = new List<int>();
+
 
         /// <summary>
         /// Initializes the location of the hider to a random location 1-1000.
@@ -19,7 +22,9 @@ namespace _05_hide_and_seek
         /// </summary>
         public Hider()
         {
-            throw new NotImplementedException();
+            Random ranNum = new Random();
+            _location = ranNum.Next(1, 1001);
+            _distance.Clear();
         }
 
         /// <summary>
@@ -29,7 +34,9 @@ namespace _05_hide_and_seek
         /// <param name="seekerLocation">The current location of the seeker.</param>
         public void Watch(int seekerLocation)
         {
-            throw new NotImplementedException();
+            int difDistance = Math.Abs(_location - seekerLocation);
+            
+            _distance.Add(difDistance);
         }
 
         /// <summary>
@@ -43,7 +50,21 @@ namespace _05_hide_and_seek
         /// <returns>The hint message</returns>
         public string GetHint()
         {
-            throw new NotImplementedException();
+            string hint = "";
+            if (_distance.Count < 2) {
+                hint = "Who knows where you are";
+            }
+            else if (_distance[_distance.Count - 1] == 0) {
+                hint = "(;.;) You found me!";
+            }
+            else if (_distance[_distance.Count - 1] < _distance[_distance.Count - 2]) {
+                hint = "(>.<) Getting warmer!";
+            }
+            else if (_distance[_distance.Count - 1] > _distance[_distance.Count - 2]) {
+                hint = "(^.^) Getting colder!";
+            }
+
+            return hint;
         }
 
         /// <summary>
@@ -52,7 +73,7 @@ namespace _05_hide_and_seek
         /// <returns>True if the hider has been found.</returns>
         public bool IsFound()
         {
-            throw new NotImplementedException();
+            return (_distance[_distance.Count - 1] == 0);
         }
     }
 }
