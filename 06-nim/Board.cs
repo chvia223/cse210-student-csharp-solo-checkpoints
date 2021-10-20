@@ -12,12 +12,14 @@ namespace _06_nim
     class Board
     {
         // TODO: Declare any member variables here.
+        private List<int> _piles = new List<int>();
 
         /// <summary>
         /// Initialize the Board
         /// </summary>
         public Board()
         {
+            Prepare();
         }
 
         /// <summary>
@@ -29,7 +31,17 @@ namespace _06_nim
         /// </summary>
         private void Prepare()
         {
-            throw new NotImplementedException();
+            _piles.Clear();
+
+            Random randNum = new Random();
+            int numPiles = randNum.Next(2, 5);
+            
+            for (int i = 0; i < numPiles; i++)
+            {
+                int numStones = randNum.Next(1, 9);
+
+                _piles.Add(numStones);
+            }
         }
 
         /// <summary>
@@ -39,7 +51,7 @@ namespace _06_nim
         /// <param name="move">Contains the pile and the number of stones</param>
         public void Apply(Move move)
         {
-            throw new NotImplementedException();            
+            _piles[move.GetPile()] = _piles[move.GetPile()] - move.GetStones();            
         }
 
         /// <summary>
@@ -48,7 +60,22 @@ namespace _06_nim
         /// <returns>True, if there are no more stones</returns>
         public bool IsEmpty()
         {
-            throw new NotImplementedException();
+            bool emptyCheck = false;
+
+            for (int i = 0; i < _piles.Count; i++)
+            {
+                if (_piles[i] <= 0)
+                {
+                    emptyCheck = true;
+                }
+                else
+                {
+                    emptyCheck = false;
+                    break;
+                }
+            }
+
+            return emptyCheck;
         }
 
         /// <summary>
@@ -64,7 +91,26 @@ namespace _06_nim
         /// <returns>The string representation.</returns>
         public override string ToString()
         {
-            throw new NotImplementedException();
+            string boardString = "\n"
+                               + "--------------------\n";
+
+            for (int i = 0; i < _piles.Count; i++)
+            {
+                string row = $"{i}: ";
+
+                for (int j = 0; j < _piles[i]; j++)
+                {
+                    row = string.Concat(row, "O");
+                }
+
+                row = string.Concat(row, "\n");
+
+                boardString = string.Concat(boardString, row);
+            }
+
+            boardString = string.Concat(boardString, "--------------------\n");
+
+            return boardString;
         }
 
         /// <summary>
