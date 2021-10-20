@@ -45,6 +45,9 @@ namespace _06_nim
 
                 Player player = new Player(name);
                 _roster.AddPlayer(player);
+
+                // test board output
+                // Console.WriteLine(_board.ToString());
             }
         }
 
